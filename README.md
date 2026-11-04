@@ -1,29 +1,23 @@
-Ilya Tan — Personal Portfolio
 
+# Ilya Tan — Portfolio
 
-A personal portfolio website showcasing my work as a UI/UX Designer, with a focus on UI design for mobile applications, SaaS products, and B2B systems, alongside my portrait photography.
+UI/UX Designer passionate about creating clean, intuitive, and meaningful digital experiences, specializing in mobile applications, SaaS, and B2B systems. Also interested in photography and visual design.
 
+# Overview
 
-Purpose
+This portfolio brings together my design work and photography in one place. It is designed to feel minimal and professional at first glance, with expressive typography, varied layouts, subtle motion, and a personal visual gallery.
+
+# Purpose
+
 This website is my digital portfolio—a place for potential employers, clients, and collaborators to explore my work, learn about my approach to design, and connect with me.
 
+# About Me
 
-About Me
 I'm a UI/UX Designer who enjoys creating clear, intuitive, and visually engaging digital experiences. My main focus is UI design for mobile applications, SaaS products, and B2B systems. Outside of product design, I enjoy portrait photography, visual exploration, and continuously learning new skills.
 
+## Contact
 
-Contact:
-
-Portfolio: https://ilyatan.github.io/Portfolio_ilyatan/
-
-
-Email: memongski@outlook.com
-
-
-LinkedIn: https://www.linkedin.com/in/edmund-diaz-ii
-
-
-GitHub: https://github.com/ilyatan
-
-
-Thanks for visiting my portfolio repository!
+- **Portfolio:** https://ilyatan.github.io/Portfolio_ilyatan/
+- **Email:** memongski@outlook.com
+- **LinkedIn:** https://www.linkedin.com/in/edmund-diaz-ii
+- **GitHub:** https://github.com/ilyatan
