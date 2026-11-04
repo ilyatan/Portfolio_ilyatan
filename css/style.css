@@ -1460,7 +1460,7 @@ footer {
 
 /* ── Category ────────────────────────────────────────────── */
 .showcase-category {
-  margin-bottom: 4rem;
+  margin-bottom: 5.5rem;
 }
 
 .showcase-category__header {
@@ -1629,6 +1629,18 @@ footer {
     gap: 2.75rem;
     align-items: stretch;
   }
+
+  .photo-gallery--alternate {
+    align-items: center;
+  }
+
+  .photo-gallery--alternate .photo-gallery__hero-col {
+    order: 2;
+  }
+
+  .photo-gallery--alternate .photo-gallery__side-col {
+    order: 1;
+  }
 }
 
 /* ── Hero Column ──────────────────────────────────────────── */
@@ -1681,6 +1693,29 @@ footer {
 
 .photo-gallery__hero-frame:hover .photo-gallery__hero-img {
   transform: scale(1.025);
+}
+
+/* ── Design Hero Frame & Image (Square 1:1 with contain) ── */
+.photo-gallery__hero-frame--design {
+  aspect-ratio: 1/1;
+  background-color: var(--border);
+}
+
+@media (min-width: 900px) {
+  .photo-gallery__hero-frame--design {
+    aspect-ratio: 1/1;
+    max-height: 520px;
+    min-height: unset;
+  }
+}
+
+.photo-gallery__hero-img--design {
+  object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .photo-gallery__hero-img--design {
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .photo-gallery__hero-overlay {
@@ -1811,6 +1846,18 @@ footer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.625rem;
+}
+
+/* 5-Column Grid for Design & Mock-ups (10 items = 2 complete rows of 5) */
+.photo-gallery__grid--designs {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+@media (max-width: 540px) {
+  .photo-gallery__grid--designs {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+  }
 }
 
 @media (max-width: 480px) {

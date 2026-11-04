@@ -57,7 +57,9 @@ Portfolio_5_antigravity/
     ├── profile/
     │   └── ilya.jpg         ← Profile photo (About page)
     ├── showcase/            ← Personal work images (photography, design, etc.)
-    │   └── photography/     ← Full-resolution photos (cover.JPG, photo-N.jpg)
+    │   ├── photography/     ← Full-resolution photos (cover.JPG, photo-N.jpg)
+    │   │   └── thumbs/      ← Lightweight web-optimized thumbnails (360px)
+    │   └── designs/         ← Graphic design & mock-ups (d_cover.jpg, d_thumb_N.ext)
     │       └── thumbs/      ← Lightweight web-optimized thumbnails (360px)
     ├── carecompanion/       ← Project images (cover.jpg, screen-N.jpg)
     ├── stayio/

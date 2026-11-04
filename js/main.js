@@ -141,7 +141,7 @@ const aboutData = {
   ],
   interests: [
     { id: 'photography', label: 'Photography', description: 'Capturing everyday moments and finding composition in ordinary places.', gallery: [] },
-    { id: 'graphic-design', label: 'Graphic Design & Brochures', description: 'Print design, layout work, and occasional branding experiments.', gallery: [] },
+    { id: 'designs', label: 'Design and Mock-ups', description: 'Transit ad mockups, brand identities, marketing graphics, and promotional design.', gallery: [] },
     { id: 'it-support', label: 'IT & Technical Work', description: 'Phone repairs, PC builds, network setups, and hardware troubleshooting.', gallery: [] },
     { id: 'drawing', label: 'Drawing', description: 'Sketching characters and scenes — mostly for fun.', gallery: [] },
     { id: 'manga', label: 'Manga', description: 'An ongoing reading habit. Currently alternating between several series.', gallery: [] },
@@ -183,12 +183,20 @@ const showcaseData = [
     ],
   },
   {
-    id: 'graphic-design',
-    label: 'Graphic Design',
-    description: 'Print design, layout work, and occasional branding experiments.',
+    id: 'designs',
+    label: 'Design and Mock-ups',
+    description: 'Transit ad mockups, brand identities, marketing graphics, and promotional design.',
     items: [
-      // { src: '../images/showcase/gd-1.jpg', alt: 'Description', span: 'large' },
-      // { src: '../images/showcase/gd-2.jpg', alt: 'Description', span: 'square' },
+      { src: '../images/showcase/designs/d_cover.jpg', thumb: '../images/showcase/designs/thumbs/d_cover.jpg', alt: 'Bus Advertisement — Transit Campaign' },
+      { src: '../images/showcase/designs/d_thumb_1.jpg', thumb: '../images/showcase/designs/thumbs/d_thumb_1.jpg', alt: 'Bus Advertisement — Retail & Route Campaign' },
+      { src: '../images/showcase/designs/d_thumb_2.jpg', thumb: '../images/showcase/designs/thumbs/d_thumb_2.jpg', alt: 'Modern Minibus Ad — High Mobility Showcase' },
+      { src: '../images/showcase/designs/d_thumb_3.jpg', thumb: '../images/showcase/designs/thumbs/d_thumb_3.jpg', alt: 'Rear Bus Ad Mockup — Highway Skyline' },
+      { src: '../images/showcase/designs/d_thumb_4.jpg', thumb: '../images/showcase/designs/thumbs/d_thumb_4.jpg', alt: 'Minibus Side Wrap — Sunset Cityscape' },
+      { src: '../images/showcase/designs/d_thumb_5.jpg', thumb: '../images/showcase/designs/thumbs/d_thumb_5.jpg', alt: 'LokalStore Launch Promo — QR Platform' },
+      { src: '../images/showcase/designs/d_thumb_6.png', thumb: '../images/showcase/designs/thumbs/d_thumb_6.png', alt: 'SimplyShare Foundation — Brochure Design' },
+      { src: '../images/showcase/designs/d_thumb_7.png', thumb: '../images/showcase/designs/thumbs/d_thumb_7.png', alt: 'Product Retouching — Perfume Mockup' },
+      { src: '../images/showcase/designs/d_thumb_8.png', thumb: '../images/showcase/designs/thumbs/d_thumb_8.png', alt: 'Stayio — Brand Identity & Logo Design' },
+      { src: '../images/showcase/designs/d_thumb_9.png', thumb: '../images/showcase/designs/thumbs/d_thumb_9.png', alt: '9tea — Fresh Tea Brand Identity' },
     ],
   },
   {
@@ -776,7 +784,7 @@ function selectHeroPhoto(index) {
   const heroCounter = document.getElementById('photo-hero-counter')
   const heroCaption = document.getElementById('photo-hero-caption')
   const metaTitle = document.getElementById('photo-meta-title')
-  const thumbs = document.querySelectorAll('.photo-gallery__thumb')
+  const thumbs = document.querySelectorAll('#photo-gallery-grid .photo-gallery__thumb')
 
   if (heroImg) {
     heroImg.style.opacity = '0.35'
@@ -837,6 +845,140 @@ function openPhotoLightbox(index = 0) {
 window.selectHeroPhoto = selectHeroPhoto
 window.openPhotoLightbox = openPhotoLightbox
 
+/* ── Interactive Design & Mock-ups Gallery (Alternate Layout) ── */
+let currentDesignIndex = 0
+
+function renderDesignGallery(category) {
+  const items = category.items || []
+  if (items.length === 0) {
+    return `<div class="bento-grid">${renderBentoGrid(category)}</div>`
+  }
+
+  const initial = items[0]
+  const total = items.length
+  const totalFormatted = total < 10 ? '0' + total : total
+
+  return `
+    <div class="photo-gallery photo-gallery--alternate" id="designs-gallery">
+      <!-- Right Hero Column (Desktop: Right, Mobile: Top) -->
+      <div class="photo-gallery__hero-col">
+        <div class="photo-gallery__hero-frame photo-gallery__hero-frame--design" id="design-hero-frame" onclick="openDesignLightbox(currentDesignIndex)" title="Click to view fullscreen">
+          <img id="design-hero-img" class="photo-gallery__hero-img photo-gallery__hero-img--design" src="${initial.src}" alt="${initial.alt || category.label}" onerror="this.onerror=null; if('${initial.thumb}') this.src='${initial.thumb}'">
+          
+          <div class="photo-gallery__hero-overlay">
+            <span class="photo-gallery__badge" id="design-hero-counter">01 / ${totalFormatted}</span>
+            <button type="button" class="photo-gallery__expand-btn" aria-label="Open fullscreen" title="Open fullscreen" onclick="event.stopPropagation(); openDesignLightbox(currentDesignIndex)">
+              ${Icons.maximize()}
+            </button>
+          </div>
+
+          <div class="photo-gallery__hero-caption" id="design-hero-caption">
+            ${initial.alt || category.label}
+          </div>
+        </div>
+      </div>
+
+      <!-- Left Thumbnail Column (Desktop: Left, Mobile: Bottom) -->
+      <div class="photo-gallery__side-col">
+        <div class="photo-gallery__meta">
+          <div class="photo-gallery__meta-header">
+            <span class="photo-gallery__meta-eyebrow">Design & Mock-ups</span>
+            <span class="photo-gallery__meta-hint">Hover to zoom • Click to preview</span>
+          </div>
+          <h4 class="photo-gallery__meta-title" id="design-meta-title">${initial.alt || category.label}</h4>
+        </div>
+
+        <div class="photo-gallery__grid photo-gallery__grid--designs" id="design-gallery-grid" role="region" aria-label="Design and mock-up thumbnails">
+          ${items.map((item, idx) => `
+            <button
+              type="button"
+              class="photo-gallery__thumb ${idx === 0 ? 'photo-gallery__thumb--active' : ''}"
+              data-index="${idx}"
+              onclick="selectHeroDesign(${idx})"
+              aria-label="${item.alt || `Design ${idx + 1}`}"
+              title="${item.alt || `Design ${idx + 1}`}"
+            >
+              <img src="${item.thumb || item.src}" alt="${item.alt || `Design ${idx + 1}`}" loading="lazy" onerror="this.onerror=null; this.src='${item.src}'">
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `
+}
+
+function selectHeroDesign(index) {
+  const designCat = showcaseData.find(c => c.id === 'designs' || c.id === 'graphic-design')
+  if (!designCat || !designCat.items || !designCat.items[index]) return
+
+  const item = designCat.items[index]
+  currentDesignIndex = index
+
+  const heroImg = document.getElementById('design-hero-img')
+  const heroCounter = document.getElementById('design-hero-counter')
+  const heroCaption = document.getElementById('design-hero-caption')
+  const metaTitle = document.getElementById('design-meta-title')
+  const thumbs = document.querySelectorAll('#design-gallery-grid .photo-gallery__thumb')
+
+  if (heroImg) {
+    heroImg.style.opacity = '0.35'
+    heroImg.style.transform = 'scale(0.98)'
+
+    const preloader = new Image()
+    preloader.src = item.src
+    const applyImage = () => {
+      if (currentDesignIndex === index) {
+        heroImg.src = item.src
+        heroImg.alt = item.alt || designCat.label
+        heroImg.style.opacity = '1'
+        heroImg.style.transform = 'scale(1)'
+      }
+    }
+    preloader.onload = applyImage
+    preloader.onerror = () => {
+      if (currentDesignIndex === index) {
+        heroImg.src = item.thumb || item.src
+        heroImg.alt = item.alt || designCat.label
+        heroImg.style.opacity = '1'
+        heroImg.style.transform = 'scale(1)'
+      }
+    }
+    setTimeout(applyImage, 180)
+  }
+
+  const total = designCat.items.length
+  const currentFormatted = (index + 1) < 10 ? '0' + (index + 1) : (index + 1)
+  const totalFormatted = total < 10 ? '0' + total : total
+
+  if (heroCounter) heroCounter.textContent = `${currentFormatted} / ${totalFormatted}`
+  if (heroCaption) heroCaption.textContent = item.alt || designCat.label
+  if (metaTitle) metaTitle.textContent = item.alt || designCat.label
+
+  thumbs.forEach((thumb, idx) => {
+    if (idx === index) {
+      thumb.classList.add('photo-gallery__thumb--active')
+    } else {
+      thumb.classList.remove('photo-gallery__thumb--active')
+    }
+  })
+}
+
+function openDesignLightbox(index = 0) {
+  const designCat = showcaseData.find(c => c.id === 'designs' || c.id === 'graphic-design')
+  if (!designCat || !designCat.items || designCat.items.length === 0) return
+
+  const lightboxItems = designCat.items.map(item => ({
+    src: item.src,
+    alt: item.alt || designCat.label,
+    caption: item.alt || ''
+  }))
+
+  openLightbox(lightboxItems, index)
+}
+
+window.selectHeroDesign = selectHeroDesign
+window.openDesignLightbox = openDesignLightbox
+
 function initAboutPage() {
   const root = document.getElementById('root')
   if (!root) return
@@ -896,7 +1038,7 @@ function initAboutPage() {
           <p class="section__eyebrow">Creations</p>
           <h2 class="showcase-section__heading">Beyond the screen.</h2>
           <p class="showcase-section__sub">
-            A collection of personal work outside UI design — photography, graphic design, drawing, and more.
+            A collection of personal work outside UI design — photography, design & mock-ups, drawing, and more.
           </p>
         </div>
 
@@ -907,9 +1049,11 @@ function initAboutPage() {
             <p class="showcase-category__desc">${category.description}</p>
           </div>
           ${category.id === 'photography'
-            ? renderPhotographyGallery(category)
-            : `<div class="bento-grid">${renderBentoGrid(category)}</div>`
-          }
+      ? renderPhotographyGallery(category)
+      : (category.id === 'designs' || category.id === 'graphic-design')
+        ? renderDesignGallery(category)
+        : `<div class="bento-grid">${renderBentoGrid(category)}</div>`
+    }
         </div>
         `).join('')}
       </div>
