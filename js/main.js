@@ -869,6 +869,7 @@ function initAboutPage() {
             </div>
             <div class="about-profile__info" style="margin-top:1rem;">
               <p>Ilya Tan</p>
+              <p>Edmund Diaz II</p>
               <p>UI|UX Designer</p>
               <p>Cebu, Philippines</p>
             </div>
