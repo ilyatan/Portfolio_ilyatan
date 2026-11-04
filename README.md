@@ -12,10 +12,17 @@ About Me
 I'm a UI/UX Designer who enjoys creating clear, intuitive, and visually engaging digital experiences. My main focus is UI design for mobile applications, SaaS products, and B2B systems. Outside of product design, I enjoy portrait photography, visual exploration, and continuously learning new skills.
 
 
-Contact
+Contact:
+
 Portfolio: https://ilyatan.github.io/Portfolio_ilyatan/
+
+
 Email: memongski@outlook.com
+
+
 LinkedIn: https://www.linkedin.com/in/edmund-diaz-ii
+
+
 GitHub: https://github.com/ilyatan
 
 
