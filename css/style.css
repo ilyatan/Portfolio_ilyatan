@@ -1734,31 +1734,21 @@ footer {
   background-color: rgba(255, 255, 255, 0.02);
 }
 
-/* ── Sketch Hero Frame & Image (portrait, contain) ───────── */
+/* ── Sketch Hero Frame & Image (portrait, cover) ─────────── */
 .photo-gallery__hero-frame--drawing {
   background-color: var(--border);
 }
 
 .photo-gallery__hero-img--drawing {
-  object-fit: contain;
-  background-color: rgba(0, 0, 0, 0.02);
+  object-fit: cover;
 }
 
-[data-theme="dark"] .photo-gallery__hero-img--drawing {
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-/* Four sketches → 2×2 larger thumbnails instead of a sparse 4-across row */
+/* Sketches: square thumbnails filled edge-to-edge like the other galleries */
 .photo-gallery__grid--drawing .photo-gallery__thumb img {
-  object-fit: contain;
-  background-color: rgba(0, 0, 0, 0.02);
+  object-fit: cover;
 }
 
-[data-theme="dark"] .photo-gallery__grid--drawing .photo-gallery__thumb img {
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-/* ── Side Quest Hero Frame & Image (4:3, contain) ────────── */
+/* ── Side Quest Hero Frame & Image (4:3, cover) ──────────── */
 .photo-gallery__hero-frame--side-quests {
   aspect-ratio: 4 / 3;
   background-color: var(--border);
@@ -1773,12 +1763,7 @@ footer {
 }
 
 .photo-gallery__hero-img--side-quests {
-  object-fit: contain;
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
-[data-theme="dark"] .photo-gallery__hero-img--side-quests {
-  background-color: rgba(255, 255, 255, 0.02);
+  object-fit: cover;
 }
 
 .photo-gallery__hero-overlay {
