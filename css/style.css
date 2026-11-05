@@ -1643,6 +1643,22 @@ footer {
   }
 }
 
+/* Sketches: give the cover slightly less weight than the thumbnail column */
+@media (min-width: 900px) {
+  .photo-gallery--drawing {
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+  }
+
+  .photo-gallery--drawing .photo-gallery__hero-frame {
+    flex: none;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 3 / 4;
+    max-height: 500px;
+  }
+}
+
 /* ── Hero Column ──────────────────────────────────────────── */
 .photo-gallery__hero-col {
   width: 100%;
@@ -1715,6 +1731,30 @@ footer {
 }
 
 [data-theme="dark"] .photo-gallery__hero-img--design {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ── Sketch Hero Frame & Image (portrait, contain) ───────── */
+.photo-gallery__hero-frame--drawing {
+  background-color: var(--border);
+}
+
+.photo-gallery__hero-img--drawing {
+  object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .photo-gallery__hero-img--drawing {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Four sketches → 2×2 larger thumbnails instead of a sparse 4-across row */
+.photo-gallery__grid--drawing .photo-gallery__thumb img {
+  object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .photo-gallery__grid--drawing .photo-gallery__thumb img {
   background-color: rgba(255, 255, 255, 0.02);
 }
 
@@ -1864,6 +1904,11 @@ footer {
   .photo-gallery__grid {
     gap: 0.5rem;
   }
+}
+
+/* 2-Column Grid for Sketches (4 items = 2 complete rows of 2) */
+.photo-gallery__grid--drawing {
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .photo-gallery__thumb {

@@ -141,9 +141,9 @@ const aboutData = {
   ],
   interests: [
     { id: 'photography', label: 'Photography', description: 'Capturing everyday moments and finding composition in ordinary places.', gallery: [] },
-    { id: 'designs', label: 'Design and Mock-ups', description: 'Transit ad mockups, brand identities, marketing graphics, and promotional design.', gallery: [] },
+    { id: 'designs', label: 'Design and Mockups', description: 'Transit ad mockups, brand identities, marketing graphics, and promotional design.', gallery: [] },
     { id: 'it-support', label: 'IT & Technical Work', description: 'Phone repairs, PC builds, network setups, and hardware troubleshooting.', gallery: [] },
-    { id: 'drawing', label: 'Drawing', description: 'Sketching characters and scenes — mostly for fun.', gallery: [] },
+    { id: 'drawing', label: 'Drawing', description: 'Sketching characters — mostly for fun.', gallery: [] },
     { id: 'manga', label: 'Manga', description: 'An ongoing reading habit. Currently alternating between several series.', gallery: [] },
   ],
 }
@@ -184,7 +184,7 @@ const showcaseData = [
   },
   {
     id: 'designs',
-    label: 'Design and Mock-ups',
+    label: 'Design and Mockups',
     description: 'Transit ad mockups, brand identities, marketing graphics, and promotional design.',
     items: [
       { src: '../images/showcase/designs/d_cover.jpg', thumb: '../images/showcase/designs/thumbs/d_cover.jpg', alt: 'Bus Advertisement — Transit Campaign' },
@@ -204,8 +204,10 @@ const showcaseData = [
     label: 'Drawing',
     description: 'Sketching characters and scenes — mostly for fun.',
     items: [
-      // { src: '../images/showcase/draw-1.jpg', alt: 'Description', span: 'square' },
-      // { src: '../images/showcase/draw-2.jpg', alt: 'Description', span: 'wide' },
+      { src: '../images/showcase/drawings/dr_cover.jpg', alt: 'Sketches' },
+      { src: '../images/showcase/drawings/dr_thumb_1.jpg', alt: 'Sketches' },
+      { src: '../images/showcase/drawings/dr_thumb_2.jpg', alt: 'Sketches' },
+      { src: '../images/showcase/drawings/dr_thumb_3.jpg', alt: 'Sketches' },
     ],
   },
   {
@@ -882,13 +884,13 @@ function renderDesignGallery(category) {
       <div class="photo-gallery__side-col">
         <div class="photo-gallery__meta">
           <div class="photo-gallery__meta-header">
-            <span class="photo-gallery__meta-eyebrow">Design & Mock-ups</span>
+            <span class="photo-gallery__meta-eyebrow">Interactive Gallery</span>
             <span class="photo-gallery__meta-hint">Hover to zoom • Click to preview</span>
           </div>
           <h4 class="photo-gallery__meta-title" id="design-meta-title">${initial.alt || category.label}</h4>
         </div>
 
-        <div class="photo-gallery__grid photo-gallery__grid--designs" id="design-gallery-grid" role="region" aria-label="Design and mock-up thumbnails">
+        <div class="photo-gallery__grid photo-gallery__grid--designs" id="design-gallery-grid" role="region" aria-label="Design and mockup thumbnails">
           ${items.map((item, idx) => `
             <button
               type="button"
@@ -979,6 +981,140 @@ function openDesignLightbox(index = 0) {
 window.selectHeroDesign = selectHeroDesign
 window.openDesignLightbox = openDesignLightbox
 
+/* ── Interactive Sketches Gallery (same layout as Photography) ── */
+let currentDrawingIndex = 0
+
+function renderDrawingGallery(category) {
+  const items = category.items || []
+  if (items.length === 0) {
+    return `<div class="bento-grid">${renderBentoGrid(category)}</div>`
+  }
+
+  const initial = items[0]
+  const total = items.length
+  const totalFormatted = total < 10 ? '0' + total : total
+
+  return `
+    <div class="photo-gallery" id="drawing-gallery">
+      <!-- Left Hero Column (Desktop: Left, Mobile: Top) -->
+      <div class="photo-gallery__hero-col">
+        <div class="photo-gallery__hero-frame photo-gallery__hero-frame--drawing" id="drawing-hero-frame" onclick="openDrawingLightbox(currentDrawingIndex)" title="Click to view fullscreen">
+          <img id="drawing-hero-img" class="photo-gallery__hero-img photo-gallery__hero-img--drawing" src="${initial.src}" alt="${initial.alt || category.label}" onerror="this.onerror=null; if('${initial.thumb}') this.src='${initial.thumb}'">
+
+          <div class="photo-gallery__hero-overlay">
+            <span class="photo-gallery__badge" id="drawing-hero-counter">01 / ${totalFormatted}</span>
+            <button type="button" class="photo-gallery__expand-btn" aria-label="Open fullscreen" title="Open fullscreen" onclick="event.stopPropagation(); openDrawingLightbox(currentDrawingIndex)">
+              ${Icons.maximize()}
+            </button>
+          </div>
+
+          <div class="photo-gallery__hero-caption" id="drawing-hero-caption">
+            ${initial.alt || category.label}
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Thumbnail Column (Desktop: Right, Mobile: Bottom) -->
+      <div class="photo-gallery__side-col">
+        <div class="photo-gallery__meta">
+          <div class="photo-gallery__meta-header">
+            <span class="photo-gallery__meta-eyebrow">Sketches</span>
+            <span class="photo-gallery__meta-hint">Hover to zoom • Click to preview</span>
+          </div>
+          <h4 class="photo-gallery__meta-title" id="drawing-meta-title">${initial.alt || category.label}</h4>
+        </div>
+
+        <div class="photo-gallery__grid photo-gallery__grid--drawing" id="drawing-gallery-grid" role="region" aria-label="Sketch thumbnails">
+          ${items.map((item, idx) => `
+            <button
+              type="button"
+              class="photo-gallery__thumb ${idx === 0 ? 'photo-gallery__thumb--active' : ''}"
+              data-index="${idx}"
+              onclick="selectHeroDrawing(${idx})"
+              aria-label="${item.alt || `Sketch ${idx + 1}`}"
+              title="${item.alt || `Sketch ${idx + 1}`}"
+            >
+              <img src="${item.thumb || item.src}" alt="${item.alt || `Sketch ${idx + 1}`}" loading="lazy" onerror="this.onerror=null; this.src='${item.src}'">
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `
+}
+
+function selectHeroDrawing(index) {
+  const drawingCat = showcaseData.find(c => c.id === 'drawing')
+  if (!drawingCat || !drawingCat.items || !drawingCat.items[index]) return
+
+  const item = drawingCat.items[index]
+  currentDrawingIndex = index
+
+  const heroImg = document.getElementById('drawing-hero-img')
+  const heroCounter = document.getElementById('drawing-hero-counter')
+  const heroCaption = document.getElementById('drawing-hero-caption')
+  const metaTitle = document.getElementById('drawing-meta-title')
+  const thumbs = document.querySelectorAll('#drawing-gallery-grid .photo-gallery__thumb')
+
+  if (heroImg) {
+    heroImg.style.opacity = '0.35'
+    heroImg.style.transform = 'scale(0.98)'
+
+    const preloader = new Image()
+    preloader.src = item.src
+    const applyImage = () => {
+      if (currentDrawingIndex === index) {
+        heroImg.src = item.src
+        heroImg.alt = item.alt || drawingCat.label
+        heroImg.style.opacity = '1'
+        heroImg.style.transform = 'scale(1)'
+      }
+    }
+    preloader.onload = applyImage
+    preloader.onerror = () => {
+      if (currentDrawingIndex === index) {
+        heroImg.src = item.thumb || item.src
+        heroImg.alt = item.alt || drawingCat.label
+        heroImg.style.opacity = '1'
+        heroImg.style.transform = 'scale(1)'
+      }
+    }
+    setTimeout(applyImage, 180)
+  }
+
+  const total = drawingCat.items.length
+  const currentFormatted = (index + 1) < 10 ? '0' + (index + 1) : (index + 1)
+  const totalFormatted = total < 10 ? '0' + total : total
+
+  if (heroCounter) heroCounter.textContent = `${currentFormatted} / ${totalFormatted}`
+  if (heroCaption) heroCaption.textContent = item.alt || drawingCat.label
+  if (metaTitle) metaTitle.textContent = item.alt || drawingCat.label
+
+  thumbs.forEach((thumb, idx) => {
+    if (idx === index) {
+      thumb.classList.add('photo-gallery__thumb--active')
+    } else {
+      thumb.classList.remove('photo-gallery__thumb--active')
+    }
+  })
+}
+
+function openDrawingLightbox(index = 0) {
+  const drawingCat = showcaseData.find(c => c.id === 'drawing')
+  if (!drawingCat || !drawingCat.items || drawingCat.items.length === 0) return
+
+  const lightboxItems = drawingCat.items.map(item => ({
+    src: item.src,
+    alt: item.alt || drawingCat.label,
+    caption: item.caption || item.alt || '',
+  }))
+
+  openLightbox(lightboxItems, index)
+}
+
+window.selectHeroDrawing = selectHeroDrawing
+window.openDrawingLightbox = openDrawingLightbox
+
 function initAboutPage() {
   const root = document.getElementById('root')
   if (!root) return
@@ -1038,7 +1174,7 @@ function initAboutPage() {
           <p class="section__eyebrow">Creations</p>
           <h2 class="showcase-section__heading">Beyond the screen.</h2>
           <p class="showcase-section__sub">
-            A collection of personal work outside UI design — photography, design & mock-ups, drawing, and more.
+            A collection of personal work outside UI design — photography, design & mockups, drawing, and more.
           </p>
         </div>
 
@@ -1052,7 +1188,9 @@ function initAboutPage() {
       ? renderPhotographyGallery(category)
       : (category.id === 'designs' || category.id === 'graphic-design')
         ? renderDesignGallery(category)
-        : `<div class="bento-grid">${renderBentoGrid(category)}</div>`
+        : category.id === 'drawing'
+          ? renderDrawingGallery(category)
+          : `<div class="bento-grid">${renderBentoGrid(category)}</div>`
     }
         </div>
         `).join('')}
