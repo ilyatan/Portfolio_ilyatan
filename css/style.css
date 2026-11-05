@@ -1643,10 +1643,10 @@ footer {
   }
 }
 
-/* Sketches: give the cover slightly less weight than the thumbnail column */
+/* Sketches: cover stays smaller than the thumbnail rail; 6 items fit 3×2 */
 @media (min-width: 900px) {
   .photo-gallery--drawing {
-    grid-template-columns: 0.85fr 1.15fr;
+    grid-template-columns: 0.7fr 1.3fr;
     align-items: center;
   }
 
@@ -1906,9 +1906,9 @@ footer {
   }
 }
 
-/* 2-Column Grid for Sketches (4 items = 2 complete rows of 2) */
+/* 3-Column Grid for Sketches (6 items = 2 complete rows of 3) */
 .photo-gallery__grid--drawing {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .photo-gallery__thumb {

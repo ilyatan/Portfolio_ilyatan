@@ -208,6 +208,8 @@ const showcaseData = [
       { src: '../images/showcase/drawings/dr_thumb_1.jpg', alt: 'Sketches' },
       { src: '../images/showcase/drawings/dr_thumb_2.jpg', alt: 'Sketches' },
       { src: '../images/showcase/drawings/dr_thumb_3.jpg', alt: 'Sketches' },
+      { src: '../images/showcase/drawings/dr_thumb_4.jpg', alt: 'Sketches' },
+      { src: '../images/showcase/drawings/dr_thumb_5.jpg', alt: 'Sketches' },
     ],
   },
   {
@@ -995,7 +997,7 @@ function renderDrawingGallery(category) {
   const totalFormatted = total < 10 ? '0' + total : total
 
   return `
-    <div class="photo-gallery" id="drawing-gallery">
+    <div class="photo-gallery photo-gallery--drawing" id="drawing-gallery">
       <!-- Left Hero Column (Desktop: Left, Mobile: Top) -->
       <div class="photo-gallery__hero-col">
         <div class="photo-gallery__hero-frame photo-gallery__hero-frame--drawing" id="drawing-hero-frame" onclick="openDrawingLightbox(currentDrawingIndex)" title="Click to view fullscreen">
