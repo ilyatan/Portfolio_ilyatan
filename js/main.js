@@ -142,7 +142,7 @@ const aboutData = {
   interests: [
     { id: 'photography', label: 'Photography', description: 'Capturing everyday moments and finding composition in ordinary places.', gallery: [] },
     { id: 'designs', label: 'Design and Mockups', description: 'Transit ad mockups, brand identities, marketing graphics, and promotional design.', gallery: [] },
-    { id: 'it-support', label: 'IT & Technical Work', description: 'Phone repairs, PC builds, network setups, and hardware troubleshooting.', gallery: [] },
+    { id: 'it-support', label: 'Side Quests', description: 'Phone repairs, PC builds, network setups, and hardware troubleshooting.', gallery: [] },
     { id: 'drawing', label: 'Drawing', description: 'Sketching characters — mostly for fun.', gallery: [] },
     { id: 'manga', label: 'Manga', description: 'An ongoing reading habit. Currently alternating between several series.', gallery: [] },
   ],
@@ -213,11 +213,14 @@ const showcaseData = [
     ],
   },
   {
-    id: 'it-work',
-    label: 'IT & Technical Work',
+    id: 'side-quests',
+    label: 'Side Quests',
     description: 'Phone repairs, PC builds, network setups, and hardware documentation.',
     items: [
-      // { src: '../images/showcase/it-1.jpg', alt: 'Description', span: 'square' },
+      { src: '../images/showcase/side_quests/t_cover.jpg', thumb: '../images/showcase/side_quests/thumbs/t_cover.jpg', alt: 'Side quests' },
+      { src: '../images/showcase/side_quests/t_thumb_1.jpg', thumb: '../images/showcase/side_quests/thumbs/t_thumb_1.jpg', alt: 'Side quests' },
+      { src: '../images/showcase/side_quests/t_thumb_2.jpg', thumb: '../images/showcase/side_quests/thumbs/t_thumb_2.jpg', alt: 'Side quests' },
+      { src: '../images/showcase/side_quests/t_thumb_3.jpg', thumb: '../images/showcase/side_quests/thumbs/t_thumb_3.jpg', alt: 'Side quests' },
     ],
   },
 ]
@@ -1117,6 +1120,140 @@ function openDrawingLightbox(index = 0) {
 window.selectHeroDrawing = selectHeroDrawing
 window.openDrawingLightbox = openDrawingLightbox
 
+/* ── Interactive Side Quests Gallery (cover on the right) ── */
+let currentSideQuestIndex = 0
+
+function renderSideQuestsGallery(category) {
+  const items = category.items || []
+  if (items.length === 0) {
+    return `<div class="bento-grid">${renderBentoGrid(category)}</div>`
+  }
+
+  const initial = items[0]
+  const total = items.length
+  const totalFormatted = total < 10 ? '0' + total : total
+
+  return `
+    <div class="photo-gallery photo-gallery--alternate photo-gallery--side-quests" id="side-quests-gallery">
+      <!-- Right Hero Column (Desktop: Right, Mobile: Top) -->
+      <div class="photo-gallery__hero-col">
+        <div class="photo-gallery__hero-frame photo-gallery__hero-frame--side-quests" id="side-quests-hero-frame" onclick="openSideQuestLightbox(currentSideQuestIndex)" title="Click to view fullscreen">
+          <img id="side-quests-hero-img" class="photo-gallery__hero-img photo-gallery__hero-img--side-quests" src="${initial.src}" alt="${initial.alt || category.label}" onerror="this.onerror=null; if('${initial.thumb}') this.src='${initial.thumb}'">
+
+          <div class="photo-gallery__hero-overlay">
+            <span class="photo-gallery__badge" id="side-quests-hero-counter">01 / ${totalFormatted}</span>
+            <button type="button" class="photo-gallery__expand-btn" aria-label="Open fullscreen" title="Open fullscreen" onclick="event.stopPropagation(); openSideQuestLightbox(currentSideQuestIndex)">
+              ${Icons.maximize()}
+            </button>
+          </div>
+
+          <div class="photo-gallery__hero-caption" id="side-quests-hero-caption">
+            ${initial.alt || category.label}
+          </div>
+        </div>
+      </div>
+
+      <!-- Left Thumbnail Column (Desktop: Left, Mobile: Bottom) -->
+      <div class="photo-gallery__side-col">
+        <div class="photo-gallery__meta">
+          <div class="photo-gallery__meta-header">
+            <span class="photo-gallery__meta-eyebrow">Interactive Gallery</span>
+            <span class="photo-gallery__meta-hint">Hover to zoom • Click to preview</span>
+          </div>
+          <h4 class="photo-gallery__meta-title" id="side-quests-meta-title">${initial.alt || category.label}</h4>
+        </div>
+
+        <div class="photo-gallery__grid photo-gallery__grid--side-quests" id="side-quests-gallery-grid" role="region" aria-label="Side quest thumbnails">
+          ${items.map((item, idx) => `
+            <button
+              type="button"
+              class="photo-gallery__thumb ${idx === 0 ? 'photo-gallery__thumb--active' : ''}"
+              data-index="${idx}"
+              onclick="selectHeroSideQuest(${idx})"
+              aria-label="${item.alt || `Side quest ${idx + 1}`}"
+              title="${item.alt || `Side quest ${idx + 1}`}"
+            >
+              <img src="${item.thumb || item.src}" alt="${item.alt || `Side quest ${idx + 1}`}" loading="lazy" onerror="this.onerror=null; this.src='${item.src}'">
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `
+}
+
+function selectHeroSideQuest(index) {
+  const sideQuestCat = showcaseData.find(c => c.id === 'side-quests')
+  if (!sideQuestCat || !sideQuestCat.items || !sideQuestCat.items[index]) return
+
+  const item = sideQuestCat.items[index]
+  currentSideQuestIndex = index
+
+  const heroImg = document.getElementById('side-quests-hero-img')
+  const heroCounter = document.getElementById('side-quests-hero-counter')
+  const heroCaption = document.getElementById('side-quests-hero-caption')
+  const metaTitle = document.getElementById('side-quests-meta-title')
+  const thumbs = document.querySelectorAll('#side-quests-gallery-grid .photo-gallery__thumb')
+
+  if (heroImg) {
+    heroImg.style.opacity = '0.35'
+    heroImg.style.transform = 'scale(0.98)'
+
+    const preloader = new Image()
+    preloader.src = item.src
+    const applyImage = () => {
+      if (currentSideQuestIndex === index) {
+        heroImg.src = item.src
+        heroImg.alt = item.alt || sideQuestCat.label
+        heroImg.style.opacity = '1'
+        heroImg.style.transform = 'scale(1)'
+      }
+    }
+    preloader.onload = applyImage
+    preloader.onerror = () => {
+      if (currentSideQuestIndex === index) {
+        heroImg.src = item.thumb || item.src
+        heroImg.alt = item.alt || sideQuestCat.label
+        heroImg.style.opacity = '1'
+        heroImg.style.transform = 'scale(1)'
+      }
+    }
+    setTimeout(applyImage, 180)
+  }
+
+  const total = sideQuestCat.items.length
+  const currentFormatted = (index + 1) < 10 ? '0' + (index + 1) : (index + 1)
+  const totalFormatted = total < 10 ? '0' + total : total
+
+  if (heroCounter) heroCounter.textContent = `${currentFormatted} / ${totalFormatted}`
+  if (heroCaption) heroCaption.textContent = item.alt || sideQuestCat.label
+  if (metaTitle) metaTitle.textContent = item.alt || sideQuestCat.label
+
+  thumbs.forEach((thumb, idx) => {
+    if (idx === index) {
+      thumb.classList.add('photo-gallery__thumb--active')
+    } else {
+      thumb.classList.remove('photo-gallery__thumb--active')
+    }
+  })
+}
+
+function openSideQuestLightbox(index = 0) {
+  const sideQuestCat = showcaseData.find(c => c.id === 'side-quests')
+  if (!sideQuestCat || !sideQuestCat.items || sideQuestCat.items.length === 0) return
+
+  const lightboxItems = sideQuestCat.items.map(item => ({
+    src: item.src,
+    alt: item.alt || sideQuestCat.label,
+    caption: item.caption || item.alt || '',
+  }))
+
+  openLightbox(lightboxItems, index)
+}
+
+window.selectHeroSideQuest = selectHeroSideQuest
+window.openSideQuestLightbox = openSideQuestLightbox
+
 function initAboutPage() {
   const root = document.getElementById('root')
   if (!root) return
@@ -1192,7 +1329,9 @@ function initAboutPage() {
         ? renderDesignGallery(category)
         : category.id === 'drawing'
           ? renderDrawingGallery(category)
-          : `<div class="bento-grid">${renderBentoGrid(category)}</div>`
+          : category.id === 'side-quests'
+            ? renderSideQuestsGallery(category)
+            : `<div class="bento-grid">${renderBentoGrid(category)}</div>`
     }
         </div>
         `).join('')}

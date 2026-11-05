@@ -1758,6 +1758,29 @@ footer {
   background-color: rgba(255, 255, 255, 0.02);
 }
 
+/* ── Side Quest Hero Frame & Image (4:3, contain) ────────── */
+.photo-gallery__hero-frame--side-quests {
+  aspect-ratio: 4 / 3;
+  background-color: var(--border);
+}
+
+@media (min-width: 900px) {
+  .photo-gallery__hero-frame--side-quests {
+    aspect-ratio: 4 / 3;
+    max-height: 520px;
+    min-height: unset;
+  }
+}
+
+.photo-gallery__hero-img--side-quests {
+  object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .photo-gallery__hero-img--side-quests {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
 .photo-gallery__hero-overlay {
   position: absolute;
   top: 1rem;
@@ -1909,6 +1932,15 @@ footer {
 /* 3-Column Grid for Sketches (6 items = 2 complete rows of 3) */
 .photo-gallery__grid--drawing {
   grid-template-columns: repeat(3, 1fr);
+}
+
+/* 2-Column 4:3 Grid for Side Quests (4 items = 2 complete rows of 2) */
+.photo-gallery__grid--side-quests {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.photo-gallery__grid--side-quests .photo-gallery__thumb {
+  aspect-ratio: 4 / 3;
 }
 
 .photo-gallery__thumb {
