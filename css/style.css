@@ -1631,7 +1631,7 @@ footer {
   }
 
   .photo-gallery--alternate {
-    align-items: center;
+    align-items: start;
   }
 
   .photo-gallery--alternate .photo-gallery__hero-col {
@@ -1643,11 +1643,11 @@ footer {
   }
 }
 
-/* Sketches: cover stays smaller than the thumbnail rail; 6 items fit 3×2 */
+/* Sketches: equal columns so the cover/thumbnail seam sits dead centre.
+   Cover fills its half; the 6 thumbnails stay small in a 3×2 rail. */
 @media (min-width: 900px) {
   .photo-gallery--drawing {
-    grid-template-columns: 0.7fr 1.3fr;
-    align-items: center;
+    align-items: start;
   }
 
   .photo-gallery--drawing .photo-gallery__hero-frame {
@@ -1655,7 +1655,7 @@ footer {
     height: auto;
     min-height: 0;
     aspect-ratio: 3 / 4;
-    max-height: 500px;
+    max-height: 520px;
   }
 }
 
@@ -1919,9 +1919,9 @@ footer {
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* 2-Column 4:3 Grid for Side Quests (4 items = 2 complete rows of 2) */
+/* 4-Column rail for Side Quests (matches Photography thumbnail scale) */
 .photo-gallery__grid--side-quests {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .photo-gallery__grid--side-quests .photo-gallery__thumb {
