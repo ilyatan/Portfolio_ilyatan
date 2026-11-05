@@ -143,7 +143,7 @@ const aboutData = {
     { id: 'photography', label: 'Photography', description: 'Capturing everyday moments and finding composition in ordinary places.', gallery: [] },
     { id: 'designs', label: 'Design and Mockups', description: 'Transit ad mockups, brand identities, marketing graphics, and promotional design.', gallery: [] },
     { id: 'it-support', label: 'Side Quests', description: 'Phone repairs, PC builds, network setups, and hardware troubleshooting.', gallery: [] },
-    { id: 'drawing', label: 'Drawing', description: 'Sketching characters — mostly for fun.', gallery: [] },
+    { id: 'drawing', label: 'Sketches', description: 'Sketching characters — mostly for fun.', gallery: [] },
     { id: 'manga', label: 'Manga', description: 'An ongoing reading habit. Currently alternating between several series.', gallery: [] },
   ],
 }
@@ -201,15 +201,15 @@ const showcaseData = [
   },
   {
     id: 'drawing',
-    label: 'Drawing',
+    label: 'Sketches',
     description: 'Sketching characters and scenes — mostly for fun.',
     items: [
-      { src: '../images/showcase/drawings/dr_cover.jpg', alt: 'Sketches' },
-      { src: '../images/showcase/drawings/dr_thumb_1.jpg', alt: 'Sketches' },
-      { src: '../images/showcase/drawings/dr_thumb_2.jpg', alt: 'Sketches' },
-      { src: '../images/showcase/drawings/dr_thumb_3.jpg', alt: 'Sketches' },
-      { src: '../images/showcase/drawings/dr_thumb_4.jpg', alt: 'Sketches' },
-      { src: '../images/showcase/drawings/dr_thumb_5.jpg', alt: 'Sketches' },
+      { src: '../images/showcase/drawings/dr_cover.jpg', alt: 'Sketch 01 — Character Study' },
+      { src: '../images/showcase/drawings/dr_thumb_1.jpg', alt: 'Sketch 02 — Portrait Study' },
+      { src: '../images/showcase/drawings/dr_thumb_2.jpg', alt: 'Sketch 03 — Figure Study' },
+      { src: '../images/showcase/drawings/dr_thumb_3.jpg', alt: 'Sketch 04 — Gesture Sketch' },
+      { src: '../images/showcase/drawings/dr_thumb_4.jpg', alt: 'Sketch 05 — Character Concept' },
+      { src: '../images/showcase/drawings/dr_thumb_5.jpg', alt: 'Sketch 06 — Expression Study' },
     ],
   },
   {
@@ -217,10 +217,10 @@ const showcaseData = [
     label: 'Side Quests',
     description: 'Phone repairs, PC builds, network setups, and hardware documentation.',
     items: [
-      { src: '../images/showcase/side_quests/t_cover.jpg', thumb: '../images/showcase/side_quests/thumbs/t_cover.jpg', alt: 'Side quests' },
-      { src: '../images/showcase/side_quests/t_thumb_1.jpg', thumb: '../images/showcase/side_quests/thumbs/t_thumb_1.jpg', alt: 'Side quests' },
-      { src: '../images/showcase/side_quests/t_thumb_2.jpg', thumb: '../images/showcase/side_quests/thumbs/t_thumb_2.jpg', alt: 'Side quests' },
-      { src: '../images/showcase/side_quests/t_thumb_3.jpg', thumb: '../images/showcase/side_quests/thumbs/t_thumb_3.jpg', alt: 'Side quests' },
+      { src: '../images/showcase/side_quests/t_cover.jpg', thumb: '../images/showcase/side_quests/thumbs/t_cover.jpg', alt: 'Side Quest 01 — Phone Repair' },
+      { src: '../images/showcase/side_quests/t_thumb_1.jpg', thumb: '../images/showcase/side_quests/thumbs/t_thumb_1.jpg', alt: 'Side Quest 02 — PC Build' },
+      { src: '../images/showcase/side_quests/t_thumb_2.jpg', thumb: '../images/showcase/side_quests/thumbs/t_thumb_2.jpg', alt: 'Side Quest 03 — Network Setup' },
+      { src: '../images/showcase/side_quests/t_thumb_3.jpg', thumb: '../images/showcase/side_quests/thumbs/t_thumb_3.jpg', alt: 'Side Quest 04 — Hardware Documentation' },
     ],
   },
 ]
@@ -625,7 +625,7 @@ function initHomePage() {
               </a>
             </div>
             <div class="interest-cards fade-in delay-200">
-              ${['Photography', 'Graphic Design', 'IT & Hardware', 'Drawing'].map(i => `
+              ${['Photography', 'Graphic Design', 'IT & Hardware', 'Sketches'].map(i => `
               <div class="interest-card"><p>${i}</p></div>
               `).join('')}
             </div>
@@ -1023,7 +1023,7 @@ function renderDrawingGallery(category) {
       <div class="photo-gallery__side-col">
         <div class="photo-gallery__meta">
           <div class="photo-gallery__meta-header">
-            <span class="photo-gallery__meta-eyebrow">Sketches</span>
+            <span class="photo-gallery__meta-eyebrow">Interactive Gallery</span>
             <span class="photo-gallery__meta-hint">Hover to zoom • Click to preview</span>
           </div>
           <h4 class="photo-gallery__meta-title" id="drawing-meta-title">${initial.alt || category.label}</h4>
